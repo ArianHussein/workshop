@@ -66,12 +66,13 @@ if(isset($_POST['send'])) {
         global $pdo;
 
        //todo: codeer passwoord! gebruik functie password_hash()
+        $passwordHash = password_hash($inputs['password'], PASSWORD_DEFAULT);
         $sth =$pdo->prepare('INSERT INTO user  (first_name,last_name, email,password, role) 
                                     VALUES (:firstname,:lastname,:email, :password, "member")');
         $sth->bindParam(':firstname', $inputs['firstname']);
         $sth->bindParam(':lastname', $inputs['lastname']);
         $sth->bindParam(':email', $inputs['email']);
-        $sth->bindParam(':password', $password);
+        $sth->bindParam(':password', $passwordHash);
         $result=$sth->execute();
 
         header("Location: index.php");

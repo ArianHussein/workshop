@@ -16,8 +16,8 @@ function checkLogin($inputs):string
     if($user!==false)
     {
         //todo controleer of password goed is, gebruik functie password_verify()
-        if($inputs['password']==$user->password){
-            $_SESSION['user']=$user;
+        if (password_verify($inputs['password'], $user->password)) {
+            $_SESSION['user'] =$user;
             if($_SESSION['user']->role=="admin")
             {
                 return 'ADMIN';
@@ -25,6 +25,10 @@ function checkLogin($inputs):string
             if($_SESSION['user']->role=="member")
             {
                 return 'MEMBER';
+            }
+            if($_SESSION['user']->role=="manager")
+            {
+                return 'MANAGER';
             }
         }
     }
@@ -56,6 +60,24 @@ function isMember():bool
     {
         $user=$_SESSION['user'];
         if ($user->role == "member")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    return false;
+}
+
+function isManager():bool
+{
+    //controleer of er ingelogd is en de user de rol admin heeft
+    if(isset($_SESSION['user'])&&!empty($_SESSION['user']))
+    {
+        $user=$_SESSION['user'];
+        if ($user->role == "manager")
         {
             return true;
         }

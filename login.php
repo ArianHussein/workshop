@@ -41,6 +41,9 @@ if(isset($_POST['email']) && isset($_POST['password'])){
             case 'ADMIN':
                 header("Location: admin.php");
                 break;
+            case 'MANAGER':
+                header("Location: manager.php");
+                break;
             case 'MEMBER':
                 header("Location: member.php");
                 break;
